@@ -67,7 +67,7 @@ private struct RecordingIdleView: View {
                     .buttonStyle(.plain)
                 }
 
-                Text("Swipe up for recordings")
+                Text("Swipe left for recordings")
                     .font(.system(size: 10, weight: .regular))
                     .foregroundStyle(.white.opacity(0.6))
                     .padding(.top, 6)

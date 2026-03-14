@@ -58,21 +58,23 @@ private struct RecordView: View {
 
             Button(action: toggle) {
                 ZStack {
+                    if case .recording = manager.state {
+                        PulsingCircle(color: echoPurple, baseOpacity: 0.35, size: 150, maxScale: 1.08)
+                    } else {
+                        Circle()
+                            .fill(echoPurple.opacity(0.35))
+                            .frame(width: 150, height: 150)
+                    }
+                    
                     Circle()
-                        .fill(RadialGradient(colors: [echoPurple, echoPurple.opacity(0.6)],
-                                             center: .center,
-                                             startRadius: 4,
-                                             endRadius: 60))
-                        .frame(width: 120, height: 120)
-                        .shadow(color: .red.opacity(0.4), radius: 16, x: 0, y: 8)
-
-                    Circle()
-                        .strokeBorder(Color.white.opacity(0.4), lineWidth: 4)
-                        .frame(width: 120, height: 120)
-
-                    Image(systemName: iconName)
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundStyle(.white)
+                        .fill(
+                            RadialGradient(colors: [echoPurple, echoPurple.opacity(0.6)],
+                                           center: .center,
+                                           startRadius: 4,
+                                           endRadius: 60)
+                        )
+                        .frame(width: 90, height: 90)
+                        .shadow(color: echoPurple.opacity(0.5), radius: 14, x: 0, y: 6)
                 }
             }
             .buttonStyle(.plain)
@@ -153,6 +155,33 @@ private struct RecordView: View {
         default:
             timer = nil
         }
+    }
+}
+
+private struct PulsingCircle: View {
+    let color: Color
+    let baseOpacity: Double
+    let size: CGFloat
+    let maxScale: CGFloat
+
+    @State private var animate = false
+
+    init(color: Color, baseOpacity: Double = 0.35, size: CGFloat, maxScale: CGFloat = 1.08) {
+        self.color = color
+        self.baseOpacity = baseOpacity
+        self.size = size
+        self.maxScale = maxScale
+    }
+
+    var body: some View {
+        Circle()
+            .fill(color)
+            .frame(width: size, height: size)
+            .scaleEffect(animate ? maxScale : 1.0)
+            .opacity(animate ? baseOpacity : max(baseOpacity - 0.15, 0))
+            .onAppear { animate = true }
+            .onDisappear { animate = false }
+            .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: animate)
     }
 }
 
