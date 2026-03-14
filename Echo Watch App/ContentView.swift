@@ -76,6 +76,33 @@ private struct RecordingIdleView: View {
     }
 }
 
+private struct PulsingCircle: View {
+    let color: Color
+    let baseOpacity: Double
+    let size: CGFloat
+    let maxScale: CGFloat
+
+    @State private var animate = false
+
+    init(color: Color, baseOpacity: Double = 0.35, size: CGFloat, maxScale: CGFloat = 1.08) {
+        self.color = color
+        self.baseOpacity = baseOpacity
+        self.size = size
+        self.maxScale = maxScale
+    }
+
+    var body: some View {
+        Circle()
+            .fill(color)
+            .frame(width: size, height: size)
+            .scaleEffect(animate ? maxScale : 1.0)
+            .opacity(animate ? baseOpacity : max(baseOpacity - 0.15, 0))
+            .onAppear { animate = true }
+            .onDisappear { animate = false }
+            .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: animate)
+    }
+}
+
 private struct RecordingActiveView: View {
     @ObservedObject var manager: WatchRecordingManager
 
@@ -85,20 +112,7 @@ private struct RecordingActiveView: View {
 
             VStack(spacing: 12) {
                 ZStack {
-                    Circle()
-                        .fill(echoPurple.opacity(0.3))
-                        .frame(width: 110, height: 110)
-
-                    // Animated progress ring
-                    Circle()
-                        .trim(from: 0, to: 0.9)
-                        .stroke(
-                            AngularGradient(colors: [echoPurple, .white, echoPurple],
-                                            center: .center),
-                            style: StrokeStyle(lineWidth: 4, lineCap: .round)
-                        )
-                        .frame(width: 118, height: 118)
-                        .rotationEffect(.degrees(manager.progressRotation))
+                    PulsingCircle(color: echoPurple, baseOpacity: 0.3, size: 110, maxScale: 1.08)
 
                     Button {
                         manager.toggleRecording()
