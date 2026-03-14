@@ -1,6 +1,8 @@
 import SwiftUI
 import Speech
 
+private let echoPurple = Color(red: 0x8E / 255, green: 0x44 / 255, blue: 0xAD / 255)
+
 struct RecordingDetailView: View {
     @EnvironmentObject var manager: RecordingManager
     let recordingID: UUID
@@ -104,7 +106,7 @@ struct RecordingDetailView: View {
                                     .font(.body)
                                     .padding(.vertical, 6)
                                     .padding(.horizontal, 8)
-                                    .background(activeSegmentID == seg.id ? Color.accentColor.opacity(0.18) : Color.clear)
+                                    .background(activeSegmentID == seg.id ? echoPurple.opacity(0.18) : Color.clear)
                                     .clipShape(RoundedRectangle(cornerRadius: 8))
                                     .id(seg.id)
                             }

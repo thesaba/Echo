@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+private let echoPurple = Color(red: 0x8E / 255, green: 0x44 / 255, blue: 0xAD / 255)
+
 struct ContentView: View {
     @StateObject private var manager = RecordingManager.shared
     @State private var selection: Tab = .record
@@ -57,7 +59,10 @@ private struct RecordView: View {
             Button(action: toggle) {
                 ZStack {
                     Circle()
-                        .fill(LinearGradient(colors: [.red, .pink], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .fill(RadialGradient(colors: [echoPurple, echoPurple.opacity(0.6)],
+                                             center: .center,
+                                             startRadius: 4,
+                                             endRadius: 60))
                         .frame(width: 120, height: 120)
                         .shadow(color: .red.opacity(0.4), radius: 16, x: 0, y: 8)
 
@@ -215,11 +220,11 @@ private struct RecordingRow: View {
         HStack(spacing: 12) {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.accentColor.opacity(0.12))
+                    .fill(echoPurple.opacity(0.12))
                     .frame(width: 40, height: 40)
                 Image(systemName: iconName)
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(Color.accentColor)
+                    .foregroundStyle(echoPurple)
             }
 
             VStack(alignment: .leading, spacing: 4) {
