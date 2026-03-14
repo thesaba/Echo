@@ -4,4 +4,10 @@
    <FileRef
       location = "self:">
    </FileRef>
+   <FileRef
+      location = "group:PulsingCircle.swift">
+   </FileRef>
+   <FileRef
+      location = "group:WaveformView.swift">
+   </FileRef>
 </Workspace>

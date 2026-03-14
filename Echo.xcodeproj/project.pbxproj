@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E876DA732F65A69000C6EBD4 /* Color+Echo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E876DA722F65A69000C6EBD4 /* Color+Echo.swift */; };
+		E876DA7B2F65ABFB00C6EBD4 /* PulsingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E876DA772F65A95000C6EBD4 /* PulsingCircle.swift */; };
+		E876DA7C2F65ABFB00C6EBD4 /* PulsingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E876DA772F65A95000C6EBD4 /* PulsingCircle.swift */; };
+		E876DA7D2F65AC0500C6EBD4 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E876DA782F65A95400C6EBD4 /* WaveformView.swift */; };
+		E876DA7E2F65AC0500C6EBD4 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E876DA782F65A95400C6EBD4 /* WaveformView.swift */; };
+		E876DA7F2F65AC0F00C6EBD4 /* Color+Echo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E876DA722F65A69000C6EBD4 /* Color+Echo.swift */; };
 		E8D78C0A2F644846006D9C38 /* Echo Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = E8D78C092F644846006D9C38 /* Echo Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -35,6 +41,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E876DA722F65A69000C6EBD4 /* Color+Echo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Echo.swift"; sourceTree = "<group>"; };
+		E876DA772F65A95000C6EBD4 /* PulsingCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingCircle.swift; sourceTree = "<group>"; };
+		E876DA782F65A95400C6EBD4 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		E8D78BFC2F644845006D9C38 /* Echo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8D78C092F644846006D9C38 /* Echo Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Echo Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -70,9 +79,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E876DA742F65A90600C6EBD4 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				E876DA762F65A93400C6EBD4 /* Extensions */,
+				E876DA752F65A92400C6EBD4 /* Components */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		E876DA752F65A92400C6EBD4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E876DA772F65A95000C6EBD4 /* PulsingCircle.swift */,
+				E876DA782F65A95400C6EBD4 /* WaveformView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E876DA762F65A93400C6EBD4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E876DA722F65A69000C6EBD4 /* Color+Echo.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E8D78BF32F644845006D9C38 = {
 			isa = PBXGroup;
 			children = (
+				E876DA742F65A90600C6EBD4 /* Shared */,
 				E8D78BFE2F644845006D9C38 /* Echo */,
 				E8D78C0D2F644846006D9C38 /* Echo Watch App */,
 				E8D78BFD2F644845006D9C38 /* Products */,
@@ -197,6 +233,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E876DA7B2F65ABFB00C6EBD4 /* PulsingCircle.swift in Sources */,
+				E876DA732F65A69000C6EBD4 /* Color+Echo.swift in Sources */,
+				E876DA7D2F65AC0500C6EBD4 /* WaveformView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +243,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E876DA7F2F65AC0F00C6EBD4 /* Color+Echo.swift in Sources */,
+				E876DA7C2F65ABFB00C6EBD4 /* PulsingCircle.swift in Sources */,
+				E876DA7E2F65AC0500C6EBD4 /* WaveformView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

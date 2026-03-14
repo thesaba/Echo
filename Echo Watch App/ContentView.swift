@@ -36,8 +36,6 @@ private struct RecordingRootView: View {
     }
 }
 
-private let echoPurple = Color(red: 0x8E / 255, green: 0x44 / 255, blue: 0xAD / 255)
-
 private struct RecordingIdleView: View {
     @ObservedObject var manager: WatchRecordingManager
 
@@ -48,7 +46,7 @@ private struct RecordingIdleView: View {
             VStack(spacing: 10) {
                 ZStack {
                     Circle()
-                        .fill(echoPurple.opacity(0.35))
+                        .fill(Color.echoPurple.opacity(0.35))
                         .frame(width: 150, height: 150)
 
                     Button {
@@ -56,13 +54,13 @@ private struct RecordingIdleView: View {
                     } label: {
                         Circle()
                             .fill(
-                                RadialGradient(colors: [echoPurple, echoPurple.opacity(0.6)],
+                                RadialGradient(colors: [Color.echoPurple, Color.echoPurple.opacity(0.6)],
                                                center: .center,
                                                startRadius: 4,
                                                endRadius: 60)
                             )
                             .frame(width: 90, height: 90)
-                            .shadow(color: echoPurple.opacity(0.5), radius: 14, x: 0, y: 6)
+                            .shadow(color: Color.echoPurple.opacity(0.5), radius: 14, x: 0, y: 6)
                     }
                     .buttonStyle(.plain)
                 }
@@ -76,33 +74,6 @@ private struct RecordingIdleView: View {
     }
 }
 
-private struct PulsingCircle: View {
-    let color: Color
-    let baseOpacity: Double
-    let size: CGFloat
-    let maxScale: CGFloat
-
-    @State private var animate = false
-
-    init(color: Color, baseOpacity: Double = 0.35, size: CGFloat, maxScale: CGFloat = 1.08) {
-        self.color = color
-        self.baseOpacity = baseOpacity
-        self.size = size
-        self.maxScale = maxScale
-    }
-
-    var body: some View {
-        Circle()
-            .fill(color)
-            .frame(width: size, height: size)
-            .scaleEffect(animate ? maxScale : 1.0)
-            .opacity(animate ? baseOpacity : max(baseOpacity - 0.15, 0))
-            .onAppear { animate = true }
-            .onDisappear { animate = false }
-            .animation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true), value: animate)
-    }
-}
-
 private struct RecordingActiveView: View {
     @ObservedObject var manager: WatchRecordingManager
 
@@ -112,19 +83,19 @@ private struct RecordingActiveView: View {
 
             VStack(spacing: 12) {
                 ZStack {
-                    PulsingCircle(color: echoPurple, baseOpacity: 0.3, size: 110, maxScale: 1.08)
+                    PulsingCircle(color: Color.echoPurple, baseOpacity: 0.3, size: 110, maxScale: 1.08)
 
                     Button {
                         manager.toggleRecording()
                     } label: {
                         RoundedRectangle(cornerRadius: 22, style: .continuous)
                             .fill(
-                                LinearGradient(colors: [echoPurple, echoPurple.opacity(0.7)],
+                                LinearGradient(colors: [Color.echoPurple, Color.echoPurple.opacity(0.7)],
                                                startPoint: .top,
                                                endPoint: .bottom)
                             )
                             .frame(width: 70, height: 70)
-                            .shadow(color: echoPurple.opacity(0.7), radius: 12, x: 0, y: 5)
+                            .shadow(color: Color.echoPurple.opacity(0.7), radius: 12, x: 0, y: 5)
                     }
                     .buttonStyle(.plain)
                 }
@@ -187,7 +158,7 @@ private struct RecordingRowView: View {
         HStack(spacing: 8) {
             ZStack {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
-                    .fill(echoPurple.opacity(0.25))
+                    .fill(Color.echoPurple.opacity(0.25))
                     .frame(width: 26, height: 26)
                 Image(systemName: iconName)
                     .font(.system(size: 12, weight: .bold))
@@ -213,90 +184,6 @@ private struct RecordingRowView: View {
 
     private var displayName: String {
         name.replacingOccurrences(of: ".m4a", with: "")
-    }
-}
-
-private struct WaveformView: View {
-    var body: some View {
-        TimelineView(.animation) { timeline in
-            let time = timeline.date.timeIntervalSinceReferenceDate
-            let phase = time * 2.0
-
-            Canvas { context, size in
-                let baseY = size.height / 2
-                let width = size.width
-
-                func path(phase: Double, amplitude: Double, frequency: Double) -> Path {
-                    var path = Path()
-                    let step = width / 60
-                    var x: CGFloat = 0
-                    var first = true
-                    while x <= width {
-                        let relative = Double(x / width)
-                        let y = baseY + CGFloat(sin(relative * frequency * .pi * 2 + phase) * amplitude)
-                        if first {
-                            path.move(to: CGPoint(x: x, y: y))
-                            first = false
-                        } else {
-                            path.addLine(to: CGPoint(x: x, y: y))
-                        }
-                        x += step
-                    }
-                    return path
-                }
-
-                let phase1 = phase
-                let phase2 = phase * 1.4 + .pi / 2
-                let phase3 = phase * 1.8 + .pi
-
-                // subtle breathing on amplitudes
-                let amp1 = 6 + 3 * sin(phase * 0.6)
-                let amp2 = 10 + 4 * sin(phase * 0.8 + .pi / 3)
-                let amp3 = 14 + 5 * sin(phase * 1.0 + .pi / 1.5)
-
-                let gradient = Gradient(colors: [
-                    echoPurple.opacity(0.1),
-                    echoPurple.opacity(0.9),
-                    echoPurple.opacity(0.1)
-                ])
-
-                // back wave
-                let path1 = path(phase: phase1, amplitude: amp1, frequency: 1.4)
-                context.stroke(
-                    path1,
-                    with: .linearGradient(
-                        gradient,
-                        startPoint: CGPoint(x: 0, y: baseY),
-                        endPoint: CGPoint(x: width, y: baseY)
-                    ),
-                    lineWidth: 2
-                )
-
-                // middle wave
-                let path2 = path(phase: phase2, amplitude: amp2, frequency: 1.8)
-                context.stroke(
-                    path2,
-                    with: .linearGradient(
-                        gradient,
-                        startPoint: CGPoint(x: 0, y: baseY - 4),
-                        endPoint: CGPoint(x: width, y: baseY + 4)
-                    ),
-                    lineWidth: 3
-                )
-
-                // front wave
-                let path3 = path(phase: phase3, amplitude: amp3, frequency: 2.2)
-                context.stroke(
-                    path3,
-                    with: .linearGradient(
-                        gradient,
-                        startPoint: CGPoint(x: 0, y: baseY - 8),
-                        endPoint: CGPoint(x: width, y: baseY + 8)
-                    ),
-                    lineWidth: 4
-                )
-            }
-        }
     }
 }
 
